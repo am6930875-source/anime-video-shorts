@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Shorts — 12 clips auto (best / funny / triste…)</title>
+<style>
+:root{--red:#ff0033;--ink:#0f0f0f;--muted:#606060;--line:#e5e5e5;--soft:#f5f5f7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--soft);color:var(--ink);font-family:Roboto,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:13px 24px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.logo{width:36px;height:36px;border-radius:11px;background:var(--red);display:grid;place-items:center;color:#fff;font-size:19px;overflow:hidden;flex:none}
+.logo img,.brand-logo img,.prev-brand img{width:100%;height:100%;object-fit:cover}
+h1{font-size:18px;margin:0}.tag{font-size:12px;background:#ede7f6;color:#5e35b1;padding:5px 10px;border-radius:20px}
+.brand-row{display:flex;gap:12px;align-items:center;margin-top:10px}
+.brand-logo{width:56px;height:56px;border-radius:14px;background:#f0f0f3;display:grid;place-items:center;font-size:26px;overflow:hidden;flex:none;border:1px solid var(--line)}
+.prev-brand{display:flex;align-items:center;gap:9px;margin-bottom:10px;font-weight:700;font-size:14px}
+.prev-brand .pic{width:34px;height:34px;border-radius:9px;background:#f0f0f3;display:grid;place-items:center;font-size:18px;overflow:hidden;flex:none}
+header nav{margin-left:auto;display:flex;gap:14px;font-size:12px;flex-wrap:wrap}
+header nav a{color:var(--red);font-weight:600;text-decoration:none}
+.wrap{max-width:1220px;margin:22px auto;padding:0 18px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;margin-bottom:13px}
+.step b{width:25px;height:25px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:12px}
+.drop{border:2px dashed #ccc;border-radius:13px;padding:22px;text-align:center;cursor:pointer;background:#fcfcfd}
+.drop:hover,.drop.over{border-color:var(--red);background:#fff4f6}
+.drop .big{font-size:30px}.drop p{margin:5px 0 0;color:var(--muted);font-size:12px}
+input[type=file]{display:none}
+.meta,.status{font-size:12px;color:var(--muted);margin-top:9px;min-height:16px;line-height:1.5}
+.status b{color:var(--ink)}
+#timeline{width:100%;height:110px;border-radius:10px;background:#17171d;margin-top:12px;display:block}
+.clips{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px;margin-top:14px}
+.clip{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;display:flex;gap:10px;min-width:0}
+.clip:hover{background:#fafafa}
+.clip canvas{width:74px;height:56px;border-radius:7px;background:#111;flex:none;object-fit:cover}
+.clip-main{min-width:0;flex:1}
+.clip h3{font-size:12px;margin:1px 0 3px;line-height:1.25}
+.clip .time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.clip .score{font-size:10px;color:#7b1fa2}
+.clip-btns{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.mini{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 8px;font-size:10px;font-weight:600}
+.mini:hover{background:var(--ink);color:#fff}
+.mini.dl{background:#e8f5e9;border-color:#c8e6c9;color:#2e7d32}
+label{display:block;font-size:12px;font-weight:600;margin:14px 0 6px}
+input[type=text],select{width:100%;border:1px solid #ccc;border-radius:9px;padding:9px 11px;font-size:13px}
+.check{display:flex;align-items:center;gap:8px;font-size:12px;margin-top:12px}
+.check input{width:16px;height:16px;accent-color:var(--red)}
+.go{width:100%;border:0;background:var(--red);color:#fff;border-radius:11px;padding:13px;font-weight:700;font-size:14px;margin-top:16px}
+.go.alt{background:var(--ink);margin-top:9px}
+.go:disabled{background:#ccc;cursor:not-allowed}
+.progress{height:8px;background:#eee;border-radius:8px;overflow:hidden;margin-top:12px;display:none}
+.progress i{display:block;height:100%;width:0;background:var(--red)}
+.warn{background:#fff8e1;border:1px solid #ffe082;color:#775b00;border-radius:10px;padding:10px;font-size:11px;margin-top:13px}
+.preview-panel{position:sticky;top:20px;align-self:start}
+.prevbox{background:#111;border-radius:13px;padding:9px;display:grid;place-items:center}
+canvas#outCanvas{width:100%;max-width:270px;aspect-ratio:9/16;border-radius:8px;background:#000;cursor:move;touch-action:none}
+.note{font-size:11px;color:var(--muted);line-height:1.6;margin-top:11px}
+video#src{display:none}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.preview-panel{position:static;order:-1}canvas#outCanvas{max-width:220px}}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo"><img id="headerLogo" style="display:none" alt=""><span id="headerEmoji">✂️</span></span>
+  <h1><span id="siteNameLabel">Votre nom</span> <span style="color:var(--red)">×<span id="countLabel">12</span></span></h1>
+  <span class="tag">Best · Funny · Triste · Action · Calme…</span>
+  <nav><a href="anime-video.html">Page vidéos</a><a href="shorts-maker.html">Short manuel</a><a href="split-short.html">📐 Split 2 vidéos</a></nav>
+</header>
+
+<div class="wrap">
+  <div>
+    <section class="panel">
+      <div class="step"><b>1</b> Vidéo source</div>
+      <label class="drop" id="drop" for="file"><div class="big">🎬</div><div style="font-weight:600">Déposer une vidéo (MP4 / WebM / MOV)</div><p>1 vidéo → 12 Shorts de 30 s · analyse locale uniquement</p></label>
+      <input type="file" id="file" accept="video/*">
+      <div class="meta" id="meta">En attente d'une vidéo.</div>
+
+      <div class="brand-row">
+        <div class="brand-logo" id="brandLogoBox"><span id="brandEmoji">🧸</span><img id="brandImg" style="display:none" alt=""></div>
+        <div style="flex:1;min-width:0">
+          <label style="margin-top:0">🎨 Logo de votre page</label>
+          <input type="file" id="logoFile" accept="image/*" style="display:block;font-size:11px">
+          <label style="margin-top:7px">✏️ Nom de votre page</label>
+          <input type="text" id="siteName" value="" placeholder="Votre nom (ex: Nunu Kids)" maxlength="30">
+          <button class="mini" id="resetBrand" style="margin-top:6px">Réinitialiser</button>
+        </div>
+      </div>
+      <div class="status" id="brandStatus"></div>
+      <div class="status" id="status">L'outil détecte l'énergie du son et le mouvement, puis crée 12 extraits avec des ambiances différentes.</div>
+    </section>
+
+    <section class="panel">
+      <div class="step"><b>2</b> Les 12 moments détectés</div>
+      <canvas id="timeline" width="1000" height="110"></canvas>
+      <div class="clips" id="clips"></div>
+      <div class="status" id="clipInfo">—</div>
+    </section>
+
+    <section class="panel">
+      <div class="step"><b>3</b> Options & export</div>
+      <div class="row" style="display:flex;gap:10px">
+        <div style="flex:2;min-width:0"><label style="margin-top:0">📝 Votre texte (laisser vide = pas de texte)</label>
+          <input type="text" id="text" value="" placeholder="Écrivez ce que vous voulez" maxlength="46"></div>
+        <div style="flex:1"><label style="margin-top:0">Taille texte</label><input type="range" id="textSize" min="26" max="96" value="52" style="width:100%"></div>
+      </div>
+      <div class="row" style="display:flex;gap:10px;align-items:flex-end">
+        <div style="flex:1;min-width:0"><label style="margin-top:0">Position texte</label><select id="textPos"><option value="bas">Bas</option><option value="centre">Centre</option><option value="haut">Haut</option><option value="libre">Libre (glisser)</option></select></div>
+        <div style="flex:1"><label style="margin-top:0">Couleur</label><input type="color" id="color" value="#ffffff"></div>
+        <div style="flex:1;min-width:0"><label style="margin-top:0">Cadre</label><select id="layout"><option value="blur" selected>Flou + 9:16</option><option value="cover">Plein cadre</option><option value="black">Fond noir</option></select></div>
+      </div>
+
+      <label class="check"><input type="checkbox" id="logoOnVideo" checked> Afficher mon logo DANS les vidéos</label>
+      <div class="row" style="display:flex;gap:10px;align-items:flex-end">
+        <div style="flex:1"><label style="margin-top:0">Taille logo</label><input type="range" id="logoSize" min="40" max="220" value="110" style="width:100%"></div>
+        <div style="flex:1"><label style="margin-top:0">Opacité</label><input type="range" id="logoOpacity" min="20" max="100" value="90" style="width:100%"></div>
+        <div style="flex:1;min-width:0"><label style="margin-top:0">Position logo</label><select id="logoPos"><option value="hd">Haut droite</option><option value="hg">Haut gauche</option><option value="bd">Bas droite</option><option value="bg">Bas gauche</option><option value="centre">Centre</option><option value="libre">Libre (glisser)</option></select></div>
+      </div>
+
+      <label>Combien de Shorts ?</label>
+      <select id="clipCount"><option value="2">2 vidéos</option><option value="4">4 vidéos</option><option value="6">6 vidéos</option><option value="8">8 vidéos</option><option value="12" selected>12 vidéos</option></select>
+
+      <div class="note">Glissez directement sur l'aperçu pour placer l'élément choisi :
+        <button type="button" class="mini" id="dragText" style="border-color:var(--red);color:var(--red)">✏️ Texte</button>
+        <button type="button" class="mini" id="dragLogo">🖼️ Logo</button>
+      </div>
+      <label class="check"><input type="checkbox" id="sound" checked> Garder le son</label>
+      <button class="go" id="exportAll" disabled>🚀 Exporter les 12 Shorts</button>
+      <button class="go" id="zipAll" disabled style="background:#2e7d32">📦 Tout télécharger (.zip)</button>
+      <div class="progress" id="progress"><i></i></div>
+      <div class="status" id="exportStatus"></div>
+      <div class="warn">⚠️ Chaque Short est enregistré en temps réel (30 s → 30 s d'attente). Prévoyez ~6 minutes pour les 12 (le son s'entend pendant l'export). N'utilisez que des vidéos à vous ou autorisées.</div>
+    </section>
+  </div>
+
+  <aside class="panel preview-panel">
+    <div class="prev-brand"><span class="pic" id="prevPic"><span id="prevEmoji">🧸</span><img id="prevImg" style="display:none" alt=""></span><span id="prevName">Votre nom</span></div>
+    <div class="step"><b>👁</b> Aperçu 9:16</div>
+    <div class="prevbox"><canvas id="outCanvas" width="540" height="960"></canvas></div>
+    <div class="note">Cliquez sur <b>Aperçu</b> d'un clip pour le voir ici, puis sur <b>Export</b> pour le télécharger seul. Le bouton vert apparaît quand le fichier est prêt.</div>
+    <video id="src" playsinline></video>
+  </aside>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const video=$('src'), cv=$('outCanvas'), cx=cv.getContext('2d'), tl=$('timeline'), tx=tl.getContext('2d');
+const W=cv.width,H=cv.height,LEN=30;
+let fileName='', audioN=null, samples=[], windows=[], clips=[], busy=false, outURLs=[], selectedIndex=-1, brandLogo='', logoImg=null;
+let textPos={x:270,y:868}, logoPos={x:474,y:83}, dragTarget='text';
+const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+
+/* ---------- LOGO + NOM DE LA PAGE ---------- */
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function read(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
+function applyBrand(){
+  const name=$('siteName').value.trim()||'Votre nom';
+  $('siteNameLabel').textContent=name;
+  $('prevName').textContent=name;
+  document.title=name+' — Best Shorts ×'+clips.length;
+  store('av_name',name);
+  const show=!!brandLogo;
+  $('headerLogo').style.display=show?'block':'none';
+  $('headerEmoji').style.display=show?'none':'block';
+  $('brandImg').style.display=show?'block':'none';
+  $('brandEmoji').style.display=show?'none':'block';
+  $('prevImg').style.display=show?'block':'none';
+  $('prevEmoji').style.display=show?'none':'block';
+  if(show){
+    $('headerLogo').src=brandLogo;$('brandImg').src=brandLogo;$('prevImg').src=brandLogo;
+    if(!logoImg||logoImg.getAttribute('src')!==brandLogo){logoImg=new Image();logoImg.onload=()=>{try{drawFrame()}catch(e){}};logoImg.src=brandLogo}
+  }else logoImg=null;
+  try{drawFrame()}catch(e){}
+}
+$('siteName').addEventListener('input',applyBrand);
+$('logoFile').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const im=new Image();
+    im.onload=()=>{
+      const c=document.createElement('canvas');c.width=c.height=128;
+      const x=c.getContext('2d'),s=Math.min(128/im.width,128/im.height);
+      x.drawImage(im,(128-im.width*s)/2,(128-im.height*s)/2,im.width*s,im.height*s);
+      brandLogo=c.toDataURL('image/png');store('av_logo',brandLogo);
+      applyBrand();$('brandStatus').textContent='✅ Logo enregistré : il apparaît sur la page ET dans vos vidéos (réglable plus bas).';
+    };
+    im.src=r.result;
+  };
+  r.readAsDataURL(f);
+});
+$('resetBrand').addEventListener('click',()=>{
+  brandLogo='';store('av_logo','');
+  $('siteName').value='';$('logoFile').value='';
+  applyBrand();$('brandStatus').textContent='Logo et nom réinitialisés.';
+});
+brandLogo=read('av_logo');
+$('siteName').value=read('av_name')||'';
+applyBrand();
+
+/* ---------- STYLES ---------- */
+const STYLES = [
+  {key:'best',   label:'🔥 Meilleur moment', text:'🔥 BEST MOMENT', f:w=>.62*w.a+.38*w.m},
+  {key:'music',  label:'🎵 Refrain musical', text:'🎵 MUSIQUE', f:w=>w.a},
+  {key:'action', label:'🎬 Action / mouvement', text:'🎬 ACTION', f:w=>w.m},
+  {key:'funny',  label:'😄 Drôle / surprenant', text:'😄 FUNNY', f:w=>.25*w.a+.45*w.mp+.30*w.ap},
+  {key:'surprise',label:'⚡ Pic de surprise', text:'⚡ SURPRISE', f:w=>.65*w.ap+.35*w.mp},
+  {key:'happy',  label:'🌈 Joyeux / énergique', text:'🌈 HAPPY', f:w=>.45*w.a+.30*w.m+.25*(1-Math.abs(w.a-.7))},
+  {key:'dance',  label:'💃 Danse / rythme', text:'💃 DANCE', f:w=>.5*w.a+.5*w.m},
+  {key:'sad',    label:'😢 Émouvant / triste', text:'😢 TOUCHING', f:w=>(w.a>.02?1-w.a*.65-w.m*.35:-1)},
+  {key:'calm',   label:'🤫 Calme / douceur', text:'🤫 CALM', f:w=>(w.a>.01?1-w.a*.6-w.m*.5:-1)},
+  {key:'tender', label:'🧸 Tout-petits', text:'🧸 TENDER', f:w=>1-Math.abs(w.a-.3)-Math.abs(w.m-.3)},
+  {key:'quiet',  label:'💤 Avant de dormir', text:'💤 SLEEPY', f:w=>(w.a>.005?1-w.a*1.2-w.m*.2:-1)},
+  {key:'final',  label:'🎈 La fin / conclusion', text:'🎈 THE END', f:null}
+];
+
+/* ---------- CHARGEMENT ---------- */
+function load(file){
+  if(!file||!file.type.startsWith('video/'))return;
+  window.__audioFile=file; fileName=file.name;
+  $('status').textContent='⏳ Lecture de la vidéo…'; $('clips').innerHTML=''; clips=[];
+  video.src=URL.createObjectURL(file); video.load();
+}
+$('file').addEventListener('change',e=>load(e.target.files[0]));
+['dragenter','dragover'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.add('over')}));
+['dragleave','drop'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.remove('over')}));
+$('drop').addEventListener('drop',e=>load(e.dataTransfer.files[0]));
+
+video.addEventListener('loadedmetadata',async()=>{
+  const d=video.duration;
+  $('meta').textContent=`${video.videoWidth}×${video.videoHeight} · ${fmt(d)} · ${fileName}`;
+  if(d<LEN){$('status').textContent='❌ Vidéo trop courte (30 s minimum).';return}
+  if(busy)return; busy=true; $('exportAll').disabled=true;
+  try{
+    $('status').textContent='🔊 Analyse du son…'; await analyzeAudio();
+    $('status').textContent='🎞️ Analyse des images…'; await analyzeMotion(d);
+    $('status').textContent='🧠 Création des 12 extraits…'; buildWindows(d); selectClips(d);
+    renderClips();
+    $('exportAll').disabled=false;
+    $('status').innerHTML=`✅ <b>12 Shorts de 30 s</b> prêts. Cliquez sur Aperçu pour voir un moment, ou Exportez-les tous.`;
+    await drawThumbs();
+  }catch(err){$('status').textContent='❌ '+err.message}
+  busy=false;
+});
+
+async function analyzeAudio(){
+  audioN=null;
+  try{
+    const buf=await window.__audioFile.arrayBuffer();
+    const AC=window.AudioContext||window.webkitAudioContext, ac=new AC();
+    const dec=await ac.decodeAudioData(buf), data=dec.getChannelData(0), sr=dec.sampleRate;
+    const b=.25,n=Math.max(1,Math.floor(video.duration/b)), raw=new Float32Array(n);
+    for(let i=0;i<n;i++){
+      const s=Math.floor(i*b*sr),e=Math.min(data.length,Math.floor((i+1)*b*sr));
+      let sum=0,c=0;for(let j=s;j<e;j+=4){sum+=data[j]*data[j];c++}
+      raw[i]=c?Math.sqrt(sum/c):0;
+    }
+    let max=0;for(const v of raw)max=Math.max(max,v);
+    audioN=max?Array.from(raw,v=>v/max):null;
+    await ac.close();
+  }catch(e){audioN=null}
+}
+async function analyzeMotion(dur){
+  samples=[];
+  const step=Math.max(1,Math.round(dur/70));
+  const c=document.createElement('canvas');c.width=80;c.height=45;
+  const x=c.getContext('2d',{willReadFrequently:true});
+  let prev=null;
+  for(let t=0;t<dur-.05;t+=step){
+    video.currentTime=t;
+    await new Promise(r=>video.addEventListener('seeked',r,{once:true}));
+    x.drawImage(video,0,0,80,45);
+    const d=x.getImageData(0,0,80,45).data;
+    let diff=0;
+    if(prev){for(let i=0;i<d.length;i+=16)diff+=Math.abs(d[i]-prev[i])+Math.abs(d[i+1]-prev[i+1])+Math.abs(d[i+2]-prev[i+2]);diff/=(d.length/16)*3}
+    prev=new Uint8ClampedArray(d); samples.push({t,m:diff});
+  }
+  let max=0;for(const s of samples)max=Math.max(max,s.m);
+  samples.forEach(s=>s.mn=max?s.m/max:0);
+}
+function buildWindows(d){
+  windows=[];
+  const maxStart=d-LEN;
+  const grid=Math.max(.5,Math.min(1,d/150));
+  for(let t=0;t<=maxStart;t+=grid){
+    const end=t+LEN;
+    let a=0,na=0,ap=0;
+    if(audioN){const b=.25;for(let i=Math.floor(t/b);i<Math.min(audioN.length,Math.floor(end/b));i++){const v=audioN[i];a+=v;na++;ap=Math.max(ap,v)}}
+    let m=0,mp=0,nm=0;
+    for(const s of samples){if(s.t>=t&&s.t<=end){m+=s.mn;nm++;mp=Math.max(mp,s.mn)}}
+    windows.push({t,a:na?a/na:0,ap,m:nm?m/nm:0,mp});
+  }
+}
+function selectClips(d){
+  clips=[];
+  const room=d-LEN;
+  const active=STYLES.slice(0,+$('clipCount').value);
+  // Assez de place ? 30 s d'écart = aucun chevauchement. Sinon on étale au maximum.
+  const minGap = room >= LEN*active.length
+    ? LEN
+    : Math.max(1.5, Math.min(LEN, room/(active.length-0.5)*0.9));
+  const used=[];
+  const isFree=t=>used.every(u=>Math.abs(u-t)>=minGap);
+  const nearestFree=target=>{
+    let best=null,bd=Infinity;
+    for(const w of windows){
+      if(!isFree(w.t))continue;
+      const dist=Math.abs(w.t-target);
+      if(dist<bd){bd=dist;best=w.t}
+    }
+    return best;
+  };
+  for(const st of active){
+    let pick;
+    if(st.key==='final'){
+      const t=nearestFree(room);
+      pick={t:t===null?room:t,s:1};
+    }else{
+      let best=null;
+      for(const w of windows){
+        if(!isFree(w.t))continue;
+        if((st.key==='sad'||st.key==='calm'||st.key==='quiet')&&w.a<.008)continue;
+        const s=st.f(w);
+        if(!best||s>best.s)best={t:w.t,s};
+      }
+      if(!best){
+        const t=nearestFree(0);
+        const w=windows.find(x=>Math.abs(x.t-t)<.01)||windows[0]||{a:0,m:0,ap:0,mp:0};
+        best={t:t===null?0:t,s:st.f(w)};
+      }
+      pick=best||{t:0,s:0};
+    }
+    const start=Math.round(pick.t*10)/10;
+    used.push(start);
+    clips.push({...st,start,score:pick.s,url:null,blob:null});
+  }
+}
+function renderClips(){
+  $('clips').innerHTML=clips.map((c,i)=>`
+    <article class="clip" data-i="${i}">
+      <canvas width="148" height="112" id="thumb${i}"></canvas>
+      <div class="clip-main">
+        <h3>${i+1}. ${c.label}</h3>
+        <div class="time">${fmt(c.start)} → ${fmt(c.start+LEN)} · score ${(Math.max(0,c.score)*100).toFixed(0)}%</div>
+        <div class="clip-btns">
+          <button class="mini" data-act="preview" data-i="${i}">▶ Aperçu</button>
+          <button class="mini" data-act="one" data-i="${i}">⬇ Export</button>
+          <a class="mini dl" id="dlink${i}" style="display:none" download="${c.key}-short.webm">✓ Télécharger</a>
+        </div>
+      </div>
+    </article>`).join('');
+  const tight=(video.duration-LEN)<clips.length*10;
+  $('clipInfo').textContent=`${clips.length} extraits · ${LEN} s chacun · moments tous différents`+(tight?' (chevauchements légers : vidéo courte)':' (bien séparés)');
+}
+async function drawThumbs(){
+  for(let i=0;i<clips.length;i++){
+    const c=clips[i];
+    video.currentTime=c.start;
+    await new Promise(r=>video.addEventListener('seeked',r,{once:true}));
+    const t=document.getElementById('thumb'+i),x=t.getContext('2d');
+    const s=Math.max(t.width/video.videoWidth,t.height/video.videoHeight);
+    const dw=video.videoWidth*s,dh=video.videoHeight*s;
+    x.drawImage(video,(t.width-dw)/2,(t.height-dh)/2,dw,dh);
+  }
+  drawTimeline();
+}
+function drawTimeline(){
+  const w=tl.width,h=tl.height,d=video.duration||1;
+  tx.fillStyle='#17171d';tx.fillRect(0,0,w,h);
+  if(audioN){
+    tx.fillStyle='rgba(255,120,60,.65)';
+    for(let i=0;i<audioN.length;i+=Math.max(1,Math.floor(audioN.length/w))){
+      const bh=audioN[i]*(h-30);tx.fillRect(i/audioN.length*w,h-15-bh,Math.max(1,w/audioN.length+1),bh);
+    }
+  }
+  const cols=['#ff0033','#ff9800','#00e5ff','#e91e63','#ffeb3b','#8bc34a','#9c27b0','#3f51b5','#009688','#ff5722','#607d8b','#cddc39'];
+  clips.forEach((c,i)=>{
+    const x1=c.start/d*w,x2=(c.start+LEN)/d*w;
+    tx.fillStyle=cols[i%cols.length]+'33';tx.fillRect(x1,0,x2-x1,h);
+    tx.strokeStyle=cols[i%cols.length];tx.lineWidth=selectedIndex===i?4:2;tx.strokeRect(x1,1,x2-x1,h-2);
+    tx.fillStyle='#fff';tx.font='bold 11px Arial';tx.fillText(String(i+1),x1+4,14);
+  });
+}
+
+/* ---------- DESSIN ---------- */
+function cover(vw,vh,extra){const s=Math.max(W/vw,H/vh)*(extra||1),dw=vw*s,dh=vh*s;return[(W-dw)/2,(H-dh)/2,dw,dh]}
+function drawFrame(){
+  if(!video.videoWidth)return;
+  cx.save();cx.clearRect(0,0,W,H);
+  const lay=$('layout').value;
+  if(lay==='blur'){
+    const [bx,by,bw,bh]=cover(video.videoWidth,video.videoHeight,1.15);
+    cx.filter='blur(34px) brightness(.55)';cx.drawImage(video,bx,by,bw,bh);cx.filter='none';
+    const [x,y,w,h]=cover(video.videoWidth,video.videoHeight);cx.drawImage(video,x,y,w,h);
+  }else if(lay==='cover'){
+    const [x,y,w,h]=cover(video.videoWidth,video.videoHeight);cx.drawImage(video,x,y,w,h);
+  }else{
+    cx.fillStyle='#000';cx.fillRect(0,0,W,H);
+    const s=Math.min(W/video.videoWidth,H/video.videoHeight),dw=video.videoWidth*s,dh=video.videoHeight*s;
+    cx.drawImage(video,(W-dw)/2,(H-dh)/2,dw,dh);
+  }
+  const t=$('text').value.trim();
+  if(t){
+    const fs=+$('textSize').value;
+    cx.font=`700 ${fs}px Arial`;cx.textAlign='center';cx.textBaseline='middle';cx.lineJoin='round';
+    cx.lineWidth=Math.max(5,fs/6);cx.strokeStyle='rgba(0,0,0,.72)';
+    cx.strokeText(t,textPos.x,textPos.y,W-40);
+    cx.fillStyle=$('color').value;cx.fillText(t,textPos.x,textPos.y,W-40);
+  }
+  if($('logoOnVideo').checked&&logoImg&&logoImg.complete&&logoImg.naturalWidth){
+    const s=+$('logoSize').value,ratio=logoImg.naturalWidth/logoImg.naturalHeight,h=s/ratio;
+    cx.globalAlpha=+$('logoOpacity').value/100;
+    cx.drawImage(logoImg,logoPos.x-s/2,logoPos.y-h/2,s,h);
+    cx.globalAlpha=1;
+  }
+  cx.restore();
+}
+function setTextPosition(v){
+  if(v==='haut')textPos={x:W/2,y:100};
+  else if(v==='centre')textPos={x:W/2,y:H/2};
+  else if(v==='bas')textPos={x:W/2,y:H-100};
+  drawFrame();
+}
+function setLogoPosition(v){
+  const s=+$('logoSize').value/2+24;
+  if(v==='hd')logoPos={x:W-s,y:s};
+  else if(v==='hg')logoPos={x:s,y:s};
+  else if(v==='bd')logoPos={x:W-s,y:H-s};
+  else if(v==='bg')logoPos={x:s,y:H-s};
+  else if(v==='centre')logoPos={x:W/2,y:H/2};
+  drawFrame();
+}
+function dragMode(target){
+  dragTarget=target;
+  $('dragText').style.borderColor=target==='text'?'var(--red)':'var(--line)';
+  $('dragText').style.color=target==='text'?'var(--red)':'var(--ink)';
+  $('dragLogo').style.borderColor=target==='logo'?'var(--red)':'var(--line)';
+  $('dragLogo').style.color=target==='logo'?'var(--red)':'var(--ink)';
+}
+$('dragText').addEventListener('click',()=>dragMode('text'));
+$('dragLogo').addEventListener('click',()=>dragMode('logo'));
+dragMode('text');
+let dragging=false;
+function pointerPos(e){
+  const r=cv.getBoundingClientRect();
+  return {x:Math.max(0,Math.min(W,(e.clientX-r.left)*W/r.width)),y:Math.max(0,Math.min(H,(e.clientY-r.top)*H/r.height))};
+}
+function moveOverlay(e){
+  const p=pointerPos(e);
+  if(dragTarget==='text'){textPos=p;$('textPos').value='libre'}
+  else{logoPos=p;$('logoPos').value='libre'}
+  drawFrame();
+}
+cv.addEventListener('pointerdown',e=>{dragging=true;cv.setPointerCapture(e.pointerId);moveOverlay(e)});
+cv.addEventListener('pointermove',e=>{if(dragging)moveOverlay(e)});
+cv.addEventListener('pointerup',()=>{dragging=false});
+cv.addEventListener('pointercancel',()=>{dragging=false});
+$('textPos').addEventListener('change',e=>setTextPosition(e.target.value));
+$('logoPos').addEventListener('change',e=>setLogoPosition(e.target.value));
+['text','textSize','color','layout','logoSize','logoOpacity','logoOnVideo'].forEach(id=>{
+  $(id).addEventListener('input',()=>{
+    if(id==='logoSize'&&$('logoPos').value!=='libre')setLogoPosition($('logoPos').value);
+    drawFrame();
+  });
+});
+async function preview(i){
+  selectedIndex=i;
+  video.pause();video.currentTime=clips[i].start;
+  await new Promise(r=>video.addEventListener('seeked',r,{once:true}));
+  drawFrame();drawTimeline();
+  $('exportStatus').textContent=`Aperçu : ${clips[i].label} (${fmt(clips[i].start)} → ${fmt(clips[i].start+LEN)}).`;
+}
+$('clips').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const i=+b.dataset.i;
+  if(b.dataset.act==='preview'){await preview(i)}
+  else if(b.dataset.act==='one'&&!busy){await exportOne(i)}
+});
+
+/* ---------- EXPORT ---------- */
+function pickMime(){return['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||''}
+async function recordClip(start){
+  video.pause();video.currentTime=start;
+  await new Promise(r=>video.addEventListener('seeked',r,{once:true}));
+  drawFrame();
+  const cs=cv.captureStream(30),tracks=[...cs.getVideoTracks()];
+  if($('sound').checked){try{tracks.push(...video.captureStream().getAudioTracks())}catch(e){}}
+  const rec=new MediaRecorder(new MediaStream(tracks),{mimeType:pickMime(),videoBitsPerSecond:2300000});
+  const chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+  const done=new Promise(r=>rec.onstop=r);
+  video.volume=$('sound').checked?1:0;video.muted=false;
+  rec.start(200);await video.play();
+  const end=Math.min(start+LEN,video.duration);
+  const tick=()=>{
+    if(rec.state!=='recording')return;
+    if(video.currentTime>=end-.02){rec.stop();return}
+    drawFrame();requestAnimationFrame(tick);
+  };tick();
+  await done;
+  video.pause();
+  return new Blob(chunks,{type:rec.mimeType||'video/webm'});
+}
+async function exportOne(i){
+  if(busy||!pickMime())return;
+  busy=true;$('exportAll').disabled=true;
+  const c=clips[i];
+  $('exportStatus').textContent=`🎥 Export ${i+1}/12 : ${c.label}…`;
+  $('progress').style.display='block';$('progress').firstElementChild.style.width='0%';
+  const blob=await recordClip(c.start);
+  const url=URL.createObjectURL(blob);outURLs.push(url);c.url=url;c.blob=blob;
+  const a=document.getElementById('dlink'+i);a.href=url;a.style.display='block';
+  updateZip();
+  $('exportStatus').textContent=`✅ ${c.label} prêt !`;
+  $('progress').firstElementChild.style.width='100%';
+  setTimeout(()=>{$('progress').style.display='none'},900);
+  busy=false;$('exportAll').disabled=false;
+}
+$('exportAll').addEventListener('click',async()=>{
+  if(busy)return;
+  busy=true;$('exportAll').disabled=true;
+  $('progress').style.display='block';
+  for(let i=0;i<clips.length;i++){
+    $('progress').firstElementChild.style.width=(i/clips.length*100).toFixed(0)+'%';
+    $('exportStatus').textContent=`🎥 Export ${i+1}/${clips.length} : ${clips[i].label} (${fmt(clips[i].start)} → ${fmt(clips[i].start+LEN)})…`;
+    const c=clips[i];
+    if(c.url){const a=document.getElementById('dlink'+i);a.href=c.url;a.style.display='block';continue}
+    const blob=await recordClip(c.start);
+    const url=URL.createObjectURL(blob);outURLs.push(url);c.url=url;c.blob=blob;
+    const a=document.getElementById('dlink'+i);a.href=url;a.style.display='block';
+  }
+  updateZip();
+  $('progress').firstElementChild.style.width='100%';
+  $('exportStatus').textContent=`✅ Les 12 Shorts sont prêts ! Cliquez sur les boutons verts « Télécharger ».`;
+  busy=false;$('exportAll').disabled=false;
+});
+/* ---------- NOMBRE DE SHORTS ---------- */
+function refreshCount(){
+  const n=+$('clipCount').value;
+  $('countLabel').textContent=n;
+  document.title=($('siteName').value.trim()||'Votre nom')+' — Best Shorts ×'+n;
+  $('exportAll').textContent=`🚀 Exporter les ${n} Shorts`;
+  if(windows.length&&video.videoWidth){
+    selectClips(video.duration);
+    renderClips();
+    updateZip();
+    drawThumbs();
+    $('exportStatus').textContent=`${n} moments sélectionnés, tous différents. Aperçu / Export disponibles.`;
+  }
+}
+$('clipCount').addEventListener('change',refreshCount);
+refreshCount();
+
+/* ---------- ZIP "TOUT TÉLÉCHARGER" (sans dépendance) ---------- */
+const CRC_TABLE=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0}return t})();
+function crc32(buf){let c=0xFFFFFFFF;for(let i=0;i<buf.length;i++)c=CRC_TABLE[(c^buf[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function makeZip(files){
+  const enc=new TextEncoder(), now=new Date();
+  const tm=((now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1))&0xFFFF;
+  const dt=(((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate())&0xFFFF;
+  const locals=[],centrals=[];let offset=0;
+  for(const f of files){
+    const name=enc.encode(f.name),data=f.data,crc=crc32(data);
+    const lh=new Uint8Array(30+name.length),lv=new DataView(lh.buffer);
+    lv.setUint32(0,0x04034b50,true);lv.setUint16(4,20,true);lv.setUint16(6,0,true);lv.setUint16(8,0,true);
+    lv.setUint16(10,tm,true);lv.setUint16(12,dt,true);lv.setUint32(14,crc,true);
+    lv.setUint32(18,data.length,true);lv.setUint32(22,data.length,true);
+    lv.setUint16(26,name.length,true);lv.setUint16(28,0,true);lh.set(name,30);
+    const ch=new Uint8Array(46+name.length),cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);
+    cv.setUint16(8,0,true);cv.setUint16(10,0,true);cv.setUint16(12,tm,true);cv.setUint16(14,dt,true);
+    cv.setUint32(16,crc,true);cv.setUint32(20,data.length,true);cv.setUint32(24,data.length,true);
+    cv.setUint16(28,name.length,true);cv.setUint16(30,0,true);cv.setUint16(32,0,true);
+    cv.setUint16(34,0,true);cv.setUint16(36,0,true);cv.setUint32(38,0,true);cv.setUint32(42,offset,true);
+    ch.set(name,46);
+    locals.push(lh,data);centrals.push(ch);offset+=lh.length+data.length;
+  }
+  const cdSize=centrals.reduce((s,c)=>s+c.length,0);
+  const eocd=new Uint8Array(22),ev=new DataView(eocd.buffer);
+  ev.setUint32(0,0x06054b50,true);ev.setUint16(4,0,true);ev.setUint16(6,0,true);
+  ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);
+  ev.setUint32(12,cdSize,true);ev.setUint32(16,offset,true);ev.setUint16(20,0,true);
+  const parts=[...locals,...centrals,eocd],total=parts.reduce((s,p)=>s+p.length,0);
+  const out=new Uint8Array(total);let pos=0;
+  for(const p of parts){out.set(p,pos);pos+=p.length}
+  return out;
+}
+function updateZip(){
+  const n=clips.filter(c=>c.blob).length;
+  const b=$('zipAll');b.disabled=n===0;
+  b.textContent=`📦 Tout télécharger (.zip) — ${n}/${clips.length}`;
+}
+$('zipAll').addEventListener('click',async()=>{
+  const ready=clips.filter(c=>c.blob);
+  if(!ready.length)return;
+  $('exportStatus').textContent='📦 Création du fichier ZIP…';
+  const files=[];
+  for(let i=0;i<clips.length;i++){
+    const c=clips[i];if(!c.blob)continue;
+    files.push({name:`${String(i+1).padStart(2,'0')}-${c.key}-${Math.round(c.start)}s.webm`,data:new Uint8Array(await c.blob.arrayBuffer())});
+  }
+  const enc=new TextEncoder();
+  const listing=clips.map((c,i)=>`${i+1}. ${c.label} - ${fmt(c.start)} a ${fmt(c.start+LEN)}${c.blob?'':' (non exporte)'}`).join('\n');
+  files.push({name:'LISTE.txt',data:enc.encode(($('siteName').value.trim()||'Mes Shorts')+' - Shorts 30s\n\n'+listing)});
+  const blob=new Blob([makeZip(files)],{type:'application/zip'});
+  const url=URL.createObjectURL(blob);outURLs.push(url);
+  const a=document.createElement('a');a.href=url;a.download=($('siteName').value.trim()||'mes').replace(/[^a-z0-9\-_]/gi,'-')+'-shorts.zip';a.click();
+  $('exportStatus').textContent=`✅ ZIP prêt : ${ready.length} Shorts dans un seul fichier.`;
+});
+window.addEventListener('beforeunload',()=>outURLs.forEach(u=>URL.revokeObjectURL(u)));
+</script>
+</body>
+</html>

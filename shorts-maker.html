@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shorts Maker 30–60s — Anime Video</title>
+<style>
+:root{--red:#ff0033;--ink:#0f0f0f;--muted:#606060;--line:#e5e5e5;--soft:#f7f7f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--soft);color:var(--ink);font-family:Roboto,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:14px 26px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:36px;height:36px;border-radius:11px;background:var(--red);display:grid;place-items:center}
+.logo svg{width:20px;height:20px;fill:#fff}
+h1{font-size:19px;margin:0;font-weight:700}
+.badge{font-size:12px;background:#e8f5e9;color:#2e7d32;border-radius:20px;padding:5px 10px;font-weight:500}
+.wrap{max-width:1180px;margin:26px auto;padding:0 20px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:22px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:9px;margin:0 0 14px;font-size:15px}
+.step b{width:25px;height:25px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:13px}
+.drop{border:2px dashed #cfcfd4;border-radius:14px;padding:26px;text-align:center;cursor:pointer;transition:.2s;background:#fcfcfd}
+.drop:hover,.drop.over{border-color:var(--red);background:#fff5f7}
+.drop .big{font-size:34px}
+.drop p{margin:6px 0 0;color:var(--muted);font-size:13px}
+input[type=file]{display:none}
+.meta{font-size:12px;color:var(--muted);margin-top:10px;min-height:16px}
+label{display:block;font-size:13px;font-weight:500;margin:14px 0 6px}
+input[type=text],select{width:100%;border:1px solid #cfcfd4;border-radius:9px;padding:10px 12px;font-size:14px;outline:none;background:#fff}
+input[type=text]:focus,select:focus{border-color:var(--red)}
+input[type=range]{width:100%;accent-color:var(--red)}
+input[type=color]{width:46px;height:36px;border:1px solid #cfcfd4;border-radius:8px;padding:2px;background:#fff}
+.row{display:flex;align-items:center;gap:12px}
+.row>input[type=range]{flex:1}
+.val{font-variant-numeric:tabular-nums;font-weight:700;min-width:52px;text-align:right;font-size:13px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+.check{display:flex;align-items:center;gap:8px;margin-top:15px;font-size:13px}
+.check input{width:17px;height:17px;accent-color:var(--red)}
+.go{width:100%;border:0;background:var(--red);color:#fff;border-radius:11px;padding:14px;font-size:15px;font-weight:700;margin-top:20px}
+.go:disabled{background:#ccc;cursor:not-allowed}
+.progress{height:9px;background:#eee;border-radius:9px;overflow:hidden;margin-top:14px;display:none}
+.progress > i{display:block;height:100%;width:0;background:var(--red);transition:width .15s}
+.status{font-size:12px;color:var(--muted);margin-top:8px;min-height:16px}
+.result{margin-top:16px;display:none}
+.result video{width:100%;border-radius:12px;background:#000}
+.download{display:block;text-align:center;background:#111;color:#fff;text-decoration:none;border-radius:10px;padding:12px;margin-top:10px;font-size:14px;font-weight:600}
+.preview-panel{position:sticky;top:20px;align-self:start}
+.preview-box{background:#111;border-radius:14px;padding:10px;display:grid;place-items:center}
+canvas{width:100%;max-width:300px;aspect-ratio:9/16;border-radius:9px;background:#000}
+.tip{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+.warn{background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px 12px;font-size:12px;color:#775b00;margin-top:14px}
+video#source{display:none}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.preview-panel{position:static;order:-1}canvas{max-width:230px}}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5L7 4.5Z"/></svg></span>
+  <h1>Shorts Maker <span style="color:var(--red)">30–60s</span></h1>
+  <span class="badge">✓ 100% dans le navigateur · aucun logiciel à installer</span>
+  <a href="best-short.html" style="font-size:13px;color:var(--red);font-weight:600">✨ Best Short auto</a>
+  <a href="split-short.html" style="font-size:13px;color:var(--red);font-weight:600">📐 Split 2 vidéos</a>
+  <a href="anime-video.html" style="margin-left:auto;font-size:13px;color:var(--red);font-weight:600">← Retour à la page</a>
+</header>
+
+<div class="wrap">
+  <div>
+    <section class="panel">
+      <div class="step"><b>1</b> Choisir une vidéo source</div>
+      <label class="drop" id="drop" for="file">
+        <div class="big">🎬</div>
+        <div style="font-weight:600">Cliquez ou déposez votre vidéo ici</div>
+        <p>MP4, WebM, MOV… · la vidéo doit durer au moins 30 secondes</p>
+      </label>
+      <input type="file" id="file" accept="video/*">
+      <div class="meta" id="meta">Aucune vidéo chargée.</div>
+    </section>
+
+    <section class="panel">
+      <div class="step"><b>2</b> Découper (30 à 60 secondes)</div>
+      <label>Début de l'extrait</label>
+      <div class="row"><input type="range" id="start" min="0" max="0" step="0.1" value="0"><span class="val" id="startVal">0.0 s</span></div>
+
+      <label>Durée du Short</label>
+      <div class="row"><input type="range" id="dur" min="30" max="60" step="1" value="45"><span class="val" id="durVal">45 s</span></div>
+      <div class="hint">Mini 30 s · Maxi 60 s (ou moins si la vidéo source est courte). Fin de l'extrait : <b id="endVal">45.0 s</b></div>
+    </section>
+
+    <section class="panel">
+      <div class="step"><b>3</b> Habiller le Short</div>
+      <label>Texte affiché</label>
+      <input type="text" id="text" value="Anime Video 🧸" maxlength="46">
+      <div class="row" style="margin-top:12px">
+        <div style="flex:1"><label style="margin-top:0">Position</label>
+          <select id="pos"><option value="haut">En haut</option><option value="bas" selected>En bas</option></select>
+        </div>
+        <div style="flex:1"><label style="margin-top:0">Cadre</label>
+          <select id="layout"><option value="blur" selected>Flou + cadre 9:16</option><option value="cover">Plein cadre</option><option value="black">Fond noir</option></select>
+        </div>
+        <div><label style="margin-top:0">Couleur</label><input type="color" id="color" value="#ffffff"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="sound" checked> Garder le son de la vidéo</label>
+
+      <button class="go" id="go" disabled>🎬 Créer le Short</button>
+      <div class="progress" id="progress"><i></i></div>
+      <div class="status" id="status">Chargez d'abord une vidéo.</div>
+
+      <div class="result" id="result">
+        <video id="out" controls playsinline></video>
+        <a class="download" id="download" download="short-anime-video.webm">⬇️ Télécharger le Short (.webm)</a>
+      </div>
+
+      <div class="warn">⚠️ N'utilisez que des vidéos **à vous** ou autorisées. Couper des vidéos NuNu TV pour les revendre reste une violation de copyright.</div>
+    </section>
+  </div>
+
+  <aside class="panel preview-panel">
+    <div class="step"><b>👁</b> Aperçu vertical 9:16</div>
+    <div class="preview-box"><canvas id="canvas" width="540" height="960"></canvas></div>
+    <div class="tip">L'export se fait en temps réel (45 s de vidéo ≈ 45 s d'attente). Le fichier généré est en <b>WebM</b>, format accepté par YouTube Shorts, TikTok et Instagram Reels.</div>
+    <video id="source" playsinline></video>
+  </aside>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const video = $('source'), canvas = $('canvas'), ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+let fileURL = null, streamURL = null, exporting = false, currentFileName = '';
+
+/* ---------- CHARGEMENT ---------- */
+function loadFile(file){
+  if(!file || !file.type.startsWith('video/')) return;
+  currentFileName = file.name;
+  if(fileURL) URL.revokeObjectURL(fileURL);
+  fileURL = URL.createObjectURL(file);
+  video.src = fileURL;
+  video.load();
+  $('status').textContent = 'Lecture des informations de la vidéo…';
+  $('result').style.display = 'none';
+}
+$('file').addEventListener('change', e => loadFile(e.target.files[0]));
+['dragenter','dragover'].forEach(t => $('drop').addEventListener(t, e => {e.preventDefault();$('drop').classList.add('over')}));
+['dragleave','drop'].forEach(t => $('drop').addEventListener(t, e => {e.preventDefault();$('drop').classList.remove('over')}));
+$('drop').addEventListener('drop', e => loadFile(e.dataTransfer.files[0]));
+
+video.addEventListener('loadedmetadata', () => {
+  const d = video.duration;
+  $('meta').textContent = `${video.videoWidth}×${video.videoHeight} · ${d.toFixed(1)} s · ${currentFileName || 'vidéo chargée'}`;
+  const maxStart = Math.max(0, d - 30);
+  $('start').max = maxStart.toFixed(1);
+  $('start').value = '0';
+  syncRange();
+  if(d < 30){
+    $('go').disabled = true;
+    $('status').textContent = '❌ Vidéo trop courte : il faut au moins 30 secondes.';
+  } else {
+    $('go').disabled = false;
+    $('status').textContent = 'Prêt. Ajustez le début et la durée, puis créez le Short.';
+  }
+  seekAndDraw(0);
+});
+video.addEventListener('error', () => { $('status').textContent = '❌ Impossible de lire cette vidéo.'; });
+
+/* ---------- RÉGLAGES ---------- */
+function syncRange(){
+  const d = video.duration || 0;
+  const s = +$('start').value;
+  const maxDur = Math.max(30, Math.min(60, Math.round((d - s) * 10) / 10));
+  $('dur').max = maxDur;
+  if(+$('dur').value > maxDur) $('dur').value = maxDur;
+  $('startVal').textContent = s.toFixed(1) + ' s';
+  $('durVal').textContent = $('dur').value + ' s';
+  $('endVal').textContent = (s + +$('dur').value).toFixed(1) + ' s';
+}
+['start','dur'].forEach(id => $(id).addEventListener('input', () => { syncRange(); seekAndDraw(+$('start').value); }));
+['text','pos','layout','color'].forEach(id => $(id).addEventListener('input', () => seekAndDraw(+$('start').value)));
+
+function seekAndDraw(t){
+  if(!video.videoWidth || exporting) return;
+  const doDraw = () => { try{ drawFrame(); }catch(e){} };
+  if(Math.abs(video.currentTime - t) < .05){ doDraw(); return; }
+  video.pause();
+  video.currentTime = Math.min(t, (video.duration || t) - .01);
+  video.addEventListener('seeked', doDraw, {once:true});
+}
+
+/* ---------- DESSIN DU CADRE 9:16 ---------- */
+function coverRect(vw, vh, scaleExtra){
+  const s = Math.max(W / vw, H / vh) * (scaleExtra || 1);
+  const dw = vw * s, dh = vh * s;
+  return [(W - dw) / 2, (H - dh) / 2, dw, dh];
+}
+function drawFrame(){
+  if(!video.videoWidth) return;
+  const layout = $('layout').value;
+  ctx.save();
+  ctx.clearRect(0,0,W,H);
+
+  if(layout === 'blur'){
+    const [bx,by,bw,bh] = coverRect(video.videoWidth, video.videoHeight, 1.15);
+    ctx.filter = 'blur(34px) brightness(.55) saturate(1.25)';
+    ctx.drawImage(video, bx,by,bw,bh);
+    ctx.filter = 'none';
+    const [x,y,w,h] = coverRect(video.videoWidth, video.videoHeight);
+    ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 30;
+    ctx.drawImage(video, x,y,w,h);
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineWidth = 5;
+    ctx.strokeRect(x,y,w,h);
+  } else if(layout === 'cover'){
+    const [x,y,w,h] = coverRect(video.videoWidth, video.videoHeight);
+    ctx.drawImage(video, x,y,w,h);
+  } else {
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
+    const s = Math.min(W / video.videoWidth, H / video.videoHeight);
+    const dw = video.videoWidth*s, dh = video.videoHeight*s;
+    ctx.drawImage(video, (W-dw)/2, (H-dh)/2, dw, dh);
+  }
+
+  const txt = $('text').value.trim();
+  if(txt){
+    ctx.font = '700 52px Fredoka, Arial, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+    const y = $('pos').value === 'haut' ? 88 : H - 92;
+    ctx.lineWidth = 10; ctx.strokeStyle = 'rgba(0,0,0,.72)';
+    ctx.strokeText(txt, W/2, y, W-48);
+    ctx.fillStyle = $('color').value;
+    ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 12;
+    ctx.fillText(txt, W/2, y, W-48);
+    ctx.shadowBlur = 0;
+  }
+  ctx.restore();
+}
+
+/* ---------- EXPORT ---------- */
+function pickMime(){
+  const list = ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm;codecs=vp9','video/webm'];
+  return list.find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || '';
+}
+video.addEventListener('pause', () => { if(!exporting) drawFrame(); });
+
+$('go').addEventListener('click', async () => {
+  if(exporting) return;
+  const start = +$('start').value, dur = +$('dur').value;
+  if(!video.videoWidth || dur < 30 || dur > 60) return;
+  exporting = true;
+  $('go').disabled = true;
+  $('progress').style.display = 'block';
+  $('status').textContent = '⏳ Préparation…';
+  $('result').style.display = 'none';
+  if(streamURL){ URL.revokeObjectURL(streamURL); streamURL = null; }
+
+  const mime = pickMime();
+  if(!mime){ $('status').textContent = '❌ Votre navigateur ne peut pas enregistrer de vidéo. Utilisez Chrome ou Edge.'; exporting=false; $('go').disabled=false; return; }
+
+  video.pause();
+  video.currentTime = start;
+  await new Promise(r => video.addEventListener('seeked', r, {once:true}));
+  drawFrame();
+
+  const canvasStream = canvas.captureStream(30);
+  const tracks = [...canvasStream.getVideoTracks()];
+  if($('sound').checked){
+    try{ tracks.push(...video.captureStream().getAudioTracks()); }
+    catch(e){ $('status').textContent = '⚠️ Son non capturé, export sans audio.'; }
+  }
+  const mixed = new MediaStream(tracks);
+  const chunks = [];
+  const rec = new MediaRecorder(mixed, {mimeType:mime, videoBitsPerSecond: 2_500_000});
+  rec.ondataavailable = e => { if(e.data.size) chunks.push(e.data); };
+  rec.onstop = () => {
+    const blob = new Blob(chunks, {type: rec.mimeType || 'video/webm'});
+    streamURL = URL.createObjectURL(blob);
+    $('out').src = streamURL;
+    $('download').href = streamURL;
+    $('download').download = `short-anime-video-${Math.round(dur)}s.webm`;
+    $('result').style.display = 'block';
+    $('status').textContent = `✅ Terminé ! Short de ${dur} s prêt à télécharger.`;
+    $('progress').style.display = 'none';
+    exporting = false;
+    $('go').disabled = false;
+    video.pause();
+  };
+
+  video.volume = $('sound').checked ? 1 : 0;
+  video.muted = false;
+  rec.start(200);
+  await video.play();
+
+  const end = Math.min(start + dur, video.duration);
+  const tick = () => {
+    if(exporting && video.currentTime >= end - 0.02){ rec.stop(); return; }
+    if(exporting){ drawFrame(); }
+    const done = Math.max(0, video.currentTime - start);
+    const pct = Math.min(100, done / dur * 100);
+    $('progress').firstElementChild.style.width = pct.toFixed(1) + '%';
+    $('status').textContent = `🎥 Enregistrement… ${done.toFixed(1)} / ${dur} s`;
+    if(exporting) requestAnimationFrame(tick);
+  };
+  tick();
+});
+window.addEventListener('beforeunload', () => { if(fileURL) URL.revokeObjectURL(fileURL); if(streamURL) URL.revokeObjectURL(streamURL); });
+</script>
+</body>
+</html>

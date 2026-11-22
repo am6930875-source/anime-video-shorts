@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anime Video — NuNu TV Nursery Rhymes pour les enfants</title>
+<meta name="description" content="Anime Video : chansons, comptines et vidéos courtes pour les tout-petits — NuNu Tv Nursery Rhymes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#ff0033;
+  --ink:#0f0f0f;
+  --muted:#606060;
+  --line:#e5e5e5;
+  --hover:#f2f2f2;
+  --soft:#f9f9f9;
+  --sidebar:240px;
+  --topbar:56px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ---------- TOP BAR ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;height:var(--topbar);background:#fff;
+  display:flex;align-items:center;gap:18px;padding:0 22px;
+  border-bottom:1px solid #f0f0f0;
+}
+.icon-btn{
+  width:40px;height:40px;border:0;border-radius:50%;background:transparent;
+  display:grid;place-items:center;color:var(--ink);flex:none;
+}
+.icon-btn:hover{background:var(--hover)}
+.icon-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.logo{display:flex;align-items:center;gap:9px;flex:none}
+.logo-mark{
+  width:34px;height:34px;border-radius:10px;background:var(--red);
+  display:grid;place-items:center;box-shadow:0 3px 9px rgba(255,0,51,.25)
+}
+.logo-mark svg{width:19px;height:19px;fill:#fff}
+.logo-text{font-family:Fredoka,cursive;font-size:19px;font-weight:700;letter-spacing:-.4px}
+.logo-text span{color:var(--red)}
+.search-wrap{display:flex;flex:1;max-width:720px;margin:0 auto;height:40px}
+.search-wrap input{
+  flex:1;min-width:0;border:1px solid #c6c6c6;border-right:0;border-radius:40px 0 0 40px;
+  padding:0 18px;font-size:15px;outline:none;background:#fff
+}
+.search-wrap input:focus{border-color:#1c62b9;padding-left:19px}
+.search-wrap button{
+  width:66px;border:1px solid #c6c6c6;border-left:0;border-radius:0 40px 40px 0;
+  background:var(--soft);display:grid;place-items:center
+}
+.search-wrap button:hover{background:var(--hover)}
+.search-wrap svg{width:20px;height:20px;fill:none;stroke:#333;stroke-width:2}
+.top-actions{display:flex;align-items:center;gap:6px;flex:none}
+.avatar{
+  width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  font-size:17px;background:linear-gradient(135deg,#ffd166,#ff6ec4);flex:none
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  position:fixed;top:var(--topbar);bottom:0;left:0;width:var(--sidebar);
+  background:#fff;overflow-y:auto;padding:12px 12px 28px;border-right:1px solid #f3f3f3;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:#ddd;border-radius:6px}
+.nav-group{padding:10px 0;border-bottom:1px solid var(--line)}
+.nav-group:last-child{border-bottom:0}
+.nav-item{
+  display:flex;align-items:center;gap:16px;height:40px;padding:0 12px;border-radius:10px;
+  font-size:14px;font-weight:500;color:#222
+}
+.nav-item:hover{background:var(--hover)}
+.nav-item.active{background:#e5e5e5;font-weight:700}
+.nav-item svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-item.active svg{fill:currentColor;stroke:none}
+.nav-item .dot{width:21px;text-align:center;font-size:15px;flex:none}
+.nav-title{font-size:14px;font-weight:700;padding:6px 12px 4px;display:flex;align-items:center;gap:6px}
+.chip-row{display:flex;gap:8px;padding:8px 12px;overflow-x:auto}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 11px;font-size:13px;white-space:nowrap}
+.chip:hover{background:var(--hover)}
+.side-footer{padding:14px 12px;font-size:12px;color:#909090;line-height:1.7}
+
+/* ---------- CONTENT ---------- */
+.content{margin-left:var(--sidebar);padding-top:var(--topbar);min-height:100vh}
+.banner{
+  height:186px;position:relative;overflow:hidden;
+  background:linear-gradient(115deg,#5b3df5 0%,#a845e8 38%,#ff6ea9 68%,#ffc14d 100%);
+}
+.banner:before,.banner:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.13)}
+.banner:before{width:280px;height:280px;left:-60px;top:-120px}
+.banner:after{width:220px;height:220px;right:60px;bottom:-140px}
+.banner-cloud{
+  position:absolute;background:rgba(255,255,255,.22);border-radius:60px;
+  width:150px;height:46px;filter:blur(1px)
+}
+.banner-cloud.a{left:14%;top:34px}
+.banner-cloud.b{right:18%;top:100px;transform:scale(.7)}
+.banner-title{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;text-align:center;text-shadow:0 3px 14px rgba(69,20,90,.35)
+}
+.banner-title b{font-family:Fredoka,cursive;font-size:42px;line-height:1;letter-spacing:-1px}
+.banner-title small{font-size:14px;font-weight:500;margin-top:8px;opacity:.95;letter-spacing:.4px}
+.banner-emoji{position:absolute;font-size:34px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18))}
+.banner-emoji.e1{left:9%;top:70px}.banner-emoji.e2{right:12%;top:44px}
+.banner-emoji.e3{left:26%;bottom:14px}.banner-emoji.e4{right:29%;bottom:10px}
+
+.channel{
+  display:flex;gap:20px;align-items:flex-start;padding:22px 34px 14px;
+}
+.channel-avatar{
+  width:96px;height:96px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:50px;
+  background:linear-gradient(135deg,#fff0b8,#ffb3d9 55%,#a78bfa);
+  border:4px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.16);margin-top:-34px
+}
+.channel-info{flex:1;min-width:0}
+.channel-name{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.channel-name h1{margin:0;font-size:23px;font-weight:700;letter-spacing:-.3px}
+.verified{width:16px;height:16px;border-radius:50%;background:#909090;display:grid;place-items:center;color:#fff;font-size:11px}
+.channel-meta{font-size:13px;color:var(--muted);margin-top:5px}
+.channel-meta b{color:var(--ink);font-weight:500}
+.channel-desc{font-size:13px;line-height:1.55;color:var(--ink);margin-top:11px;max-width:760px}
+.channel-desc a{color:#065fd4;font-weight:500}
+.channel-buttons{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.btn{border:0;border-radius:20px;padding:0 18px;height:36px;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:var(--red);color:#fff}
+.btn-primary:hover{background:#e6002e}
+.btn-primary.subscribed{background:#e5e5e5;color:var(--ink)}
+.btn-ghost{background:#f2f2f2;color:var(--ink)}
+.btn-ghost:hover{background:#e5e5e5}
+.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2}
+
+.tabs{
+  display:flex;gap:28px;padding:0 34px;border-bottom:1px solid var(--line);
+  overflow-x:auto;margin-top:6px
+}
+.tab{
+  border:0;background:transparent;padding:14px 2px 13px;font-size:14px;font-weight:500;
+  color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap
+}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
+
+.section{padding:22px 34px 40px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.section-head h2{font-size:19px;margin:0;font-weight:700}
+.section-head a{color:var(--red);font-size:14px;font-weight:500;display:flex;align-items:center;gap:4px}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:38px 16px}
+.card{cursor:pointer;min-width:0}
+.thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#eee}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.card:hover .thumb img{transform:scale(1.045)}
+.thumb:after{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .2s
+}
+.card:hover .thumb:after{background:rgba(0,0,0,.06)}
+.duration{
+  position:absolute;right:7px;bottom:7px;z-index:2;background:rgba(0,0,0,.82);color:#fff;
+  font-size:12px;font-weight:500;padding:2px 5px;border-radius:4px;line-height:1.25
+}
+.play-hint{
+  position:absolute;inset:0;z-index:2;display:grid;place-items:center;opacity:0;transition:opacity .2s
+}
+.card:hover .play-hint{opacity:1}
+.play-hint span{
+  width:46px;height:46px;border-radius:50%;background:var(--red);display:grid;place-items:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.28)
+}
+.play-hint svg{width:20px;height:20px;fill:#fff;margin-left:3px}
+.card-body{display:flex;gap:11px;margin-top:11px}
+.card-avatar{width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:19px;background:linear-gradient(135deg,#ffd166,#ff6ec4)}
+.card-title{
+  font-size:14px;font-weight:500;line-height:1.38;margin:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.card-sub{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.35}
+.card-sub .verified{width:12px;height:12px;font-size:8px;vertical-align:-2px;margin-left:3px}
+.card:hover .card-title{color:#111}
+
+/* shorts */
+.shorts-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.short-card{cursor:pointer;min-width:0}
+.short-thumb{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#eee}
+.short-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.short-card:hover .short-thumb img{transform:scale(1.04)}
+.short-play{
+  position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(transparent 55%,rgba(0,0,0,.42));
+  opacity:0;transition:opacity .2s
+}
+.short-card:hover .short-play{opacity:1}
+.short-play span{width:42px;height:42px;border-radius:50%;background:var(--red);display:grid;place-items:center}
+.short-play svg{width:18px;height:18px;fill:#fff;margin-left:2px}
+.short-title{font-size:13px;font-weight:500;line-height:1.35;margin:9px 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.short-views{font-size:12px;color:var(--muted)}
+
+/* playlists */
+.playlist-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.playlist{display:flex;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px;cursor:pointer}
+.playlist:hover{background:var(--soft)}
+.playlist .thumb{width:150px;flex:none;aspect-ratio:16/9}
+.playlist h3{font-size:14px;margin:2px 0 5px}
+.playlist p{font-size:12px;color:var(--muted);margin:0}
+
+.live-banner{
+  display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer
+}
+.live-banner:hover{background:var(--soft)}
+.live-banner .thumb{width:280px;flex:none}
+.live-badge{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;letter-spacing:.5px}
+.live-banner h3{margin:6px 0;font-size:16px}
+.live-banner p{margin:0;font-size:13px;color:var(--muted)}
+
+.empty{display:none;text-align:center;padding:70px 20px;color:var(--muted)}
+.empty.show{display:block}
+.empty b{display:block;font-size:19px;color:var(--ink);margin-bottom:6px}
+
+/* ---------- PLAYER MODAL ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.82);display:none;
+  align-items:flex-start;justify-content:center;padding:34px 18px;overflow-y:auto
+}
+.overlay.show{display:flex}
+.player-box{width:min(1080px,100%);background:#fff;border-radius:14px;overflow:hidden;position:relative}
+.player-close{
+  position:absolute;right:10px;top:10px;z-index:3;width:38px;height:38px;border:0;border-radius:50%;
+  background:rgba(0,0,0,.62);color:#fff;font-size:22px;line-height:1
+}
+.player-frame{aspect-ratio:16/9;background:#000}
+.short-mode .player-frame{aspect-ratio:9/16;max-width:420px;margin:0 auto}
+.player-frame iframe{width:100%;height:100%;border:0;display:block}
+.player-info{padding:18px 22px 24px}
+.player-info h2{font-size:19px;margin:0 0 9px;line-height:1.35}
+.player-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.player-channel{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+.player-channel .card-avatar{width:38px;height:38px}
+.player-actions{display:flex;gap:8px}
+.pill{border:0;background:#f2f2f2;border-radius:20px;padding:9px 15px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:7px}
+.pill:hover{background:#e5e5e5}
+.pill.liked{background:#e8f0fe;color:#065fd4}
+.player-desc{background:var(--soft);border-radius:10px;padding:13px 15px;margin-top:16px;font-size:13px;line-height:1.6}
+
+@media(max-width:1280px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.shorts-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1000px){
+  .sidebar{width:72px;padding:10px 8px}
+  .nav-item{justify-content:center;padding:0;font-size:0}
+  .nav-item svg{width:23px;height:23px}
+  .nav-item .dot{font-size:18px}
+  .nav-title,.chip-row,.side-footer,.nav-item span:not(.dot){display:none}
+  .content{margin-left:72px}
+  .shorts-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  .topbar{gap:8px;padding:0 10px}
+  .logo-text{display:none}
+  .top-actions .icon-btn{display:none}
+  .content{margin-left:0}
+  .sidebar{display:none}
+  .banner{height:150px}
+  .banner-title b{font-size:32px}
+  .channel{padding:18px 16px 12px;gap:14px;flex-direction:column}
+  .channel-avatar{width:80px;height:80px;font-size:40px;margin-top:-28px}
+  .tabs{padding:0 16px;gap:20px}
+  .section{padding:20px 16px 34px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 10px}
+  .shorts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .playlist-grid{grid-template-columns:1fr}
+  .live-banner{flex-direction:column;align-items:stretch}
+  .live-banner .thumb{width:100%}
+}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <button class="icon-btn" aria-label="Menu" id="menuBtn">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a class="logo" href="#" aria-label="Anime Video accueil">
+    <span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5L7 4.5Z"/></svg></span>
+    <span class="logo-text">anime<span>video</span></span>
+  </a>
+  <form class="search-wrap" id="searchForm">
+    <input type="search" id="searchInput" placeholder="Rechercher une comptine, une chanson…" aria-label="Rechercher">
+    <button type="submit" aria-label="Rechercher"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+  </form>
+  <div class="top-actions">
+    <a href="best-short.html" style="display:flex;align-items:center;gap:6px;background:var(--red);color:#fff;border-radius:20px;padding:8px 13px;font-size:13px;font-weight:600;margin-right:6px">✨ Best Short 30s</a>
+    <a href="shorts-maker.html" style="display:flex;align-items:center;gap:6px;border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:8px 13px;font-size:13px;font-weight:600;margin-right:6px">✂️ Short manuel</a>
+    <a href="split-short.html" style="display:flex;align-items:center;gap:6px;border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:8px 13px;font-size:13px;font-weight:600;margin-right:6px">📐 Split 2 vidéos</a>
+    <button class="icon-btn" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button>
+    <button class="icon-btn" aria-label="Aide"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.1 1-1.1 1.8v.3"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></button>
+    <span class="avatar" title="Votre profil">🧒</span>
+  </div>
+</header>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="nav-group">
+    <a class="nav-item active" href="#" data-nav="accueil"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span>Accueil</span></a>
+    <a class="nav-item" href="#shorts" data-nav="shorts"><svg viewBox="0 0 24 24"><path d="M4 7.5v9a3 3 0 0 0 4.6 2.5l7-4.5a3 3 0 0 0 0-5l-7-4.5A3 3 0 0 0 4 7.5Z"/><path d="M17 3.5 19 2v7l-2-1.5"/></svg><span>Shorts</span></a>
+    <a class="nav-item" href="#" data-nav="abonnements"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM8 6V4h8v2M4 10h16"/><path d="m10 14 2 1.5-2 1.5v-3Z"/></svg><span>Abonnements</span></a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-title">Vous <span style="margin-left:auto;font-size:15px">›</span></div>
+    <a class="nav-item" href="#" data-nav="historique"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg><span>Historique</span></a>
+    <a class="nav-item" href="#" data-nav="playlists"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Playlists</span></a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-title">Abonnements</div>
+    <div class="nav-item"><span class="dot">🧸</span><span>NuNu Tv Nursery Rhymes</span></div>
+    <div class="nav-item"><span class="dot">🐣</span><span>Kids Songs Club</span></div>
+    <div class="nav-item"><span class="dot">🌈</span><span>Learn With NuNu</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-title">Explorez</div>
+    <div class="chip-row">
+      <button class="chip">Comptines</button><button class="chip">Apprendre les couleurs</button>
+      <button class="chip">ABC</button><button class="chip">Animaux</button><button class="chip">Brosser les dents</button>
+    </div>
+  </div>
+  <div class="side-footer">À propos · Presse · Droits d'auteur<br>Contact · Créateurs · Publicité<br>Développeurs</div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="content">
+  <div class="banner">
+    <div class="banner-cloud a"></div><div class="banner-cloud b"></div>
+    <span class="banner-emoji e1">🧸</span><span class="banner-emoji e2">🌈</span>
+    <span class="banner-emoji e3">🎵</span><span class="banner-emoji e4">⭐</span>
+    <div class="banner-title"><b>Anime Video</b><small>Des chansons et des comptines pour les tout-petits ♪</small></div>
+  </div>
+
+  <section class="channel">
+    <div class="channel-avatar" aria-hidden="true">🧸</div>
+    <div class="channel-info">
+      <div class="channel-name"><h1>Anime Video</h1><span class="verified" title="Chaîne vérifiée">✓</span><span style="color:var(--muted);font-size:14px">@animevideo</span></div>
+      <div class="channel-meta"><b>29,9 M abonnés</b> · <b>848 vidéos</b> · 12 M vues</div>
+      <div class="channel-desc">Bienvenue sur <a href="#">Anime Video</a> — la chaîne officielle des comptines et chansons pour enfants de NuNu Tv ! 🌈<br>Nouvelles vidéos chaque semaine : ABC, couleurs, animaux, bonnes habitudes et beaucoup de fun pour les tout-petits.</div>
+      <div class="channel-buttons">
+        <button class="btn btn-primary" id="subscribeBtn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>S'abonner</span></button>
+        <button class="btn btn-ghost"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>Notifier</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="accueil">Accueil</button>
+    <button class="tab" data-tab="vidéos">Vidéos</button>
+    <button class="tab" data-tab="shorts">Shorts</button>
+    <button class="tab" data-tab="direct">En direct</button>
+    <button class="tab" data-tab="playlists">Playlists</button>
+  </nav>
+
+  <!-- VIDEOS -->
+  <section class="section view" id="view-accueil">
+    <div class="section-head"><h2>Vidéos populaires</h2><a href="#" data-goto="vidéos">Tout voir <span>›</span></a></div>
+    <div class="grid" id="videoGrid"></div>
+  </section>
+
+  <section class="section view" id="view-vidéos" style="display:none">
+    <div class="section-head"><h2>Toutes les vidéos</h2><span style="font-size:13px;color:var(--muted)" id="videoCount"></span></div>
+    <div class="grid" id="videoGridAll"></div>
+  </section>
+
+  <!-- SHORTS -->
+  <section class="section view" id="view-shorts" style="display:none">
+    <div class="section-head"><h2>Shorts pour les enfants ⚡</h2><span style="font-size:13px;color:var(--muted)">Vidéos courtes et rigolotes</span></div>
+    <div class="shorts-grid" id="shortsGrid"></div>
+  </section>
+
+  <!-- LIVE -->
+  <section class="section view" id="view-direct" style="display:none">
+    <div class="section-head"><h2>En direct</h2><span class="live-badge">● EN DIRECT</span></div>
+    <div class="live-banner" data-video="PFhEyA28QSw">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/PFhEyA28QSw/hqdefault.jpg" alt=""><span class="duration" style="background:var(--red)">● LIVE</span></div>
+      <div><h3>NuNu TV — Comptines en continu pour les enfants 🎶</h3><p>1 284 personnes regardent · NuNu Tv Nursery Rhymes</p></div>
+    </div>
+  </section>
+
+  <!-- PLAYLISTS -->
+  <section class="section view" id="view-playlists" style="display:none">
+    <div class="section-head"><h2>Playlists</h2><a href="#" data-goto="vidéos">Tout voir <span>›</span></a></div>
+    <div class="playlist-grid" id="playlistGrid"></div>
+  </section>
+
+  <div class="empty" id="emptyState"><b>Aucune vidéo trouvée 🔎</b>Essayez un autre mot-clé…</div>
+</main>
+
+<!-- ===== PLAYER ===== -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="player-box" id="playerBox">
+    <button class="player-close" id="playerClose" aria-label="Fermer">×</button>
+    <div class="player-frame" id="playerFrame"></div>
+    <div class="player-info">
+      <h2 id="playerTitle"></h2>
+      <div class="player-meta">
+        <div class="player-channel"><span class="card-avatar">🧸</span><span>NuNu Tv Nursery Rhymes <span class="verified">✓</span></span></div>
+        <div class="player-actions">
+          <button class="pill" id="likeBtn">👍 <span>J'aime</span></button>
+          <button class="pill" id="shareBtn">↗ Partager</button>
+        </div>
+      </div>
+      <div class="player-desc" id="playerDesc">Chansons et comptines pour enfants — NuNu Tv Nursery Rhymes. Apprendre en s'amusant : ABC, couleurs, nombres, animaux et bonnes habitudes ! 🌈</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- DONNÉES (vraies vidéos NuNu Tv) ---------- */
+const videos = [
+  {id:'vOvsIk7VF0Q', title:'ABC Song | Learn Alphabets | NuNu Tv Nursery Rhymes & Kids Songs', dur:'6:29', views:'6,7 M vues', time:'il y a 3 sem.'},
+  {id:'TjYGOJsrQgo', title:'Feelings & Emotion Song | NuNu Tv Nursery Rhymes & Kids Songs', dur:'7:19', views:'300 k vues', time:'il y a 10 j'},
+  {id:'3pCo7IjtqXY', title:'Ten In The Bed | Count With Baby | NuNu Tv Kids Songs', dur:'2:15', views:'113 k vues', time:'il y a 3 j'},
+  {id:'D1i1pYysJCw', title:'Rainbow Popsicle Song | Learn Colors | NuNu Tv', dur:'4:02', views:'5 M vues', time:'il y a 2 sem.'},
+  {id:'KPBnz8sYBYs', title:'I Got A Boo Boo Song | NuNu Tv Nursery Rhymes & Kids Songs', dur:'8:58', views:'3 M vues', time:'il y a 3 sem.'},
+  {id:'KO139DRV94E', title:'Baby Goes To Dentist | Kids Learn To Brush | NuNu Tv', dur:'5:41', views:'314 k vues', time:'il y a 1 mois'},
+  {id:'XCKRrgm1LSQ', title:'Five Little Ducks | Animals For Kids | NuNu Tv Nursery Rhymes', dur:'6:34', views:'12 M vues', time:'il y a 7 mois'},
+  {id:'PFhEyA28QSw', title:'Ten Little Cars + More Kids Songs | NuNu Tv Nursery Rhymes', dur:'19:44', views:'4,4 M vues', time:'il y a 4 ans'},
+  {id:'chvbheiWIwc', title:'Color Song | Learn Colors | Toddler Learning Song | NuNu Tv', dur:'4:12', views:'1,8 M vues', time:'il y a 2 mois'},
+  {id:'ocKgW1xYtcQ', title:'Oh No ! Do You Need Help Song + More Kids Songs | NuNu Tv', dur:'6:09', views:'2,9 M vues', time:'il y a 5 j'},
+  {id:'WdIFDHP5Kwg', title:'Baby Shark + More Nursery Rhymes & Kids Songs', dur:'23:16', views:'48 M vues', time:'il y a 1 an'},
+  {id:'4VaaHIV0oLY', title:'Wheels On The Bus With Animals | Animal Songs for Kids', dur:'8:37', views:'9,2 M vues', time:'il y a 8 mois'}
+];
+
+const shorts = [
+  {id:'N-jmbaA0k-c', title:'Being a Good Friend | Children Songs | NuNu Tv #short', views:'2,1 M vues'},
+  {id:'mbqDP6xGZnY', title:'Learn Colors with Popsicles 🍭 | NuNu TV #shorts', views:'36 M vues'},
+  {id:'hEGLeXYR06E', title:'Color Song 🎨 NuNu Tv #toddlersongs', views:'8,4 M vues'},
+  {id:'3kJa2fRiPuc', title:'Fun Nursery Rhymes & Toddler Learning #shorts #nunutv', views:'1,2 M vues'},
+  {id:'jJ4jUUk7JlU', title:'Fun Learning for Kids | Educational Videos for Toddlers', views:'23 M vues'},
+  {id:'ntcVGRv-7XQ', title:'Learn Colors with Nunu & Bibi | Colors Song for Kids #Shorts', views:'5,6 M vues'},
+  {id:'jiC8kABHNh0', title:'Cute Color 😀🍥🎉 #shortvideo #foryou', views:'1,1 Md vues'},
+  {id:'ktFIi0tglAI', title:'Counting 1 to 10 | Toddler Learning #shorts', views:'4,3 M vues'}
+];
+
+const playlists = [
+  {name:'NuNu TV - Season 3', count:'24 vidéos', cover:'vOvsIk7VF0Q'},
+  {name:'Apprendre les couleurs 🌈', count:'18 vidéos', cover:'D1i1pYysJCw'},
+  {name:'ABC & les chiffres 123', count:'31 vidéos', cover:'3pCo7IjtqXY'},
+  {name:'Bonnes habitudes pour les tout-petits', count:'15 vidéos', cover:'KO139DRV94E'},
+  {name:'Comptines pour s\'endormir 💤', count:'12 vidéos', cover:'XCKRrgm1LSQ'},
+  {name:'Les meilleurs moments de NuNu 🧸', count:'42 vidéos', cover:'KPBnz8sYBYs'}
+];
+
+const thumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const shortThumb = (id) => `https://i.ytimg.com/vi/${id}/oar2.jpg`;
+const playIcon = '<svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5L7 4.5Z"/></svg>';
+
+function videoCard(v){
+  return `<article class="card" data-video="${v.id}" data-title="${v.title.toLowerCase()}">
+    <div class="thumb">
+      <img src="${thumb(v.id)}" alt="${v.title}" loading="lazy">
+      <span class="duration">${v.dur}</span>
+      <span class="play-hint"><span>${playIcon}</span></span>
+    </div>
+    <div class="card-body">
+      <span class="card-avatar">🧸</span>
+      <div><h3 class="card-title">${v.title}</h3>
+      <div class="card-sub">NuNu Tv Nursery Rhymes <span class="verified">✓</span><br>${v.views} · ${v.time}</div></div>
+    </div>
+  </article>`;
+}
+function shortCard(s){
+  return `<article class="short-card" data-video="${s.id}" data-short="1" data-title="${s.title.toLowerCase()}">
+    <div class="short-thumb">
+      <img src="${shortThumb(s.id)}" alt="${s.title}" loading="lazy" onerror="this.src='${thumb(s.id)}'">
+      <span class="short-play"><span>${playIcon}</span></span>
+    </div>
+    <div class="short-title">${s.title}</div>
+    <div class="short-views">${s.views}</div>
+  </article>`;
+}
+
+document.getElementById('videoGrid').innerHTML = videos.slice(0,8).map(videoCard).join('');
+document.getElementById('videoGridAll').innerHTML = videos.map(videoCard).join('');
+document.getElementById('shortsGrid').innerHTML = shorts.map(shortCard).join('');
+document.getElementById('videoCount').textContent = videos.length + ' vidéos';
+document.getElementById('playlistGrid').innerHTML = playlists.map(p => `
+  <article class="playlist" data-goto="vidéos">
+    <div class="thumb"><img src="${thumb(p.cover)}" alt="" loading="lazy"><span class="duration">${p.count}</span></div>
+    <div><h3>${p.name}</h3><p>NuNu Tv Nursery Rhymes</p></div>
+  </article>`).join('');
+
+/* ---------- LECTEUR ---------- */
+const overlay = document.getElementById('overlay');
+const frame = document.getElementById('playerFrame');
+const box = document.getElementById('playerBox');
+let current = null;
+
+function openPlayer(id, title, isShort){
+  current = {id,title,isShort};
+  box.classList.toggle('short-mode', !!isShort);
+  frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
+    title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  document.getElementById('playerTitle').textContent = title;
+  document.getElementById('likeBtn').classList.remove('liked');
+  document.getElementById('likeBtn').querySelector('span').textContent = "J'aime";
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closePlayer(){
+  frame.innerHTML = '';
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+  current = null;
+}
+document.addEventListener('click', e => {
+  const card = e.target.closest('[data-video]');
+  if(card){
+    e.preventDefault();
+    const v = videos.find(x => x.id === card.dataset.video) || shorts.find(x => x.id === card.dataset.video);
+    openPlayer(card.dataset.video, v ? v.title : 'Vidéo NuNu TV', card.dataset.short === '1');
+    return;
+  }
+  if(e.target === overlay) closePlayer();
+});
+document.getElementById('playerClose').addEventListener('click', closePlayer);
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && overlay.classList.contains('show')) closePlayer(); });
+document.getElementById('likeBtn').addEventListener('click', e => {
+  const b = e.currentTarget, liked = b.classList.toggle('liked');
+  b.querySelector('span').textContent = liked ? "J'aime ✓" : "J'aime";
+});
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const url = current ? `https://www.youtube.com/watch?v=${current.id}` : location.href;
+  try{ await navigator.clipboard.writeText(url); alert('Lien copié ! 📋\n' + url); }
+  catch{ alert(url); }
+});
+
+/* ---------- ONGLETS ---------- */
+const views = ['accueil','vidéos','shorts','direct','playlists'];
+function showTab(tab){
+  views.forEach(v => document.getElementById('view-'+v).style.display = (v===tab ? '' : 'none'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===tab));
+  document.querySelectorAll('.nav-item[data-nav]').forEach(n => n.classList.toggle('active', n.dataset.nav===tab));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('tabs').addEventListener('click', e => {
+  const t = e.target.closest('.tab'); if(t) showTab(t.dataset.tab);
+});
+document.getElementById('sidebar').addEventListener('click', e => {
+  const n = e.target.closest('.nav-item[data-nav]'); if(!n) return;
+  const map = {accueil:'accueil', shorts:'shorts', playlists:'playlists'};
+  showTab(map[n.dataset.nav] || 'accueil');
+});
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-goto]'); if(g){ e.preventDefault(); showTab(g.dataset.goto); }
+});
+
+/* ---------- RECHERCHE ---------- */
+const search = document.getElementById('searchInput');
+function filter(){
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll('.card,.short-card').forEach(c => {
+    const ok = !q || c.dataset.title.includes(q);
+    c.style.display = ok ? '' : 'none';
+    if(ok && c.offsetParent) shown++;
+  });
+  document.getElementById('emptyState').classList.toggle('show', !!q && shown === 0);
+}
+search.addEventListener('input', filter);
+document.getElementById('searchForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const q = search.value.trim().toLowerCase();
+  if(!q) return;
+  const found = [...videos,...shorts].find(v => v.title.toLowerCase().includes(q));
+  if(found){
+    const tab = shorts.includes(found) ? 'shorts' : 'vidéos';
+    showTab(tab); filter();
+  } else filter();
+});
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  search.value = c.textContent; filter(); showTab('vidéos');
+}));
+document.getElementById('menuBtn').addEventListener('click', () => {
+  const s = document.getElementById('sidebar');
+  s.style.display = (s.style.display === 'none' ? '' : 'none');
+});
+
+/* ---------- ABONNEMENT ---------- */
+document.getElementById('subscribeBtn').addEventListener('click', e => {
+  const b = e.currentTarget, on = b.classList.toggle('subscribed');
+  b.querySelector('span').textContent = on ? 'Abonné ✓' : "S'abonner";
+  b.innerHTML = (on ? '<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>') + `<span>${on ? 'Abonné ✓' : "S'abonner"}</span>`;
+});
+</script>
+</body>
+</html>
